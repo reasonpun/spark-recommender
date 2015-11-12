@@ -26,7 +26,11 @@ The application can be run using the *spark-submit* script.
     cd target/scala-2.10/
 
     ‘$SPARK_HOME‘/bin/spark-submit --master local --driver-memory 2G --executor-memory 6G SparkRecommender-assembly-0.1.jar --class Boot (+ parameters of the recommender)
-    
+
+    here：
+
+    /opt/mapr/spark/spark-1.4.1/bin/spark-submit --class Boot --master local[*] --driver-memory 2G  --executor-memory 6G SparkRecommender-assembly-0.1.jar --data movieLens --dir /tmp --method kNN -p numberOfNehbors=5 --interface 0.0.0.0 --port 9527
+
 See [documentation of Spark](https://spark.apache.org/docs/latest/submitting-applications.html) for information about parameters of *spark-submit*.
 
 ### Parameters of the recommender
