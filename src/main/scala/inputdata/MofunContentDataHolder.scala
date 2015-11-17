@@ -17,7 +17,12 @@ class MofunContentDataHolder(dataDirectoryPath: String) extends DataHolder with 
       val fields = line.split("::")
       // format: Rating(userID, movieID, rating)
       try {
-        Rating(fields(0).toInt, fields(1).toInt, fields(2).toDouble)
+        if (fields.size == 3) {
+          Rating(fields(0).toInt, fields(1).toInt, fields(2).toDouble)
+        } else {
+          Rating(0, 0, 0.0)
+        }
+
       } catch {
         case e: Exception => Rating(0, 0, 0.0)
       }
@@ -27,11 +32,15 @@ class MofunContentDataHolder(dataDirectoryPath: String) extends DataHolder with 
   }
 
   protected def loadIDsToProductnameMapFromADirectory(dataDirectoryPath: String): Map[Int, String] = {
-    val movies = spark.sparkEnvironment.sc.textFile(dataDirectoryPath + "/mysql_data/user/*/*").map { line =>
+    val movies = spark.sparkEnvironment.sc.textFile(dataDirectoryPath + "/mysql_data/content/*/*").map { line =>
       val fields = line.split(":")
       // format: (movieID, movieName)
       try {
-        (fields(0).toInt, fields(1))
+        if (fields.size == 2) {
+          (fields(0).toInt, fields(1))
+        } else {
+          (0, " ")
+        }
       } catch {
         case e: Exception => (0, " ")
       }
