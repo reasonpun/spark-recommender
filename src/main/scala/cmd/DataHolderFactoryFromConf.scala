@@ -1,29 +1,37 @@
 package cmd
 
-import inputdata.{DataHolder, MovieLensDataHolder, NetflixInManyFilesDataHolder, NetflixInOneFileDataHolder}
+import inputdata.{DataHolder, MovieLensDataHolder, NetflixInManyFilesDataHolder, NetflixInOneFileDataHolder, MofunContentDataHolder}
 
 /**
- * Created by Ondra Fiedler on 27.8.14.
- */
+  * Created by Ondra Fiedler on 27.8.14.
+  */
 
 
 trait DataHolderFactoryFromConf extends NameAndDescription {
   /**
-   * Returns an instance of DataHolder
-   * @param conf Instance of Conf with parsed command line arguments
-   * @return DataHolder instance
-   */
+    * Returns an instance of DataHolder
+    * @param conf Instance of Conf with parsed command line arguments
+    * @return DataHolder instance
+    */
   def getDataHolderInstance(conf: Conf): DataHolder
 }
 
 object DataHolderFactoryFromConf {
   /**
-   * List of all objects that extend DataHolderFactoryFromConf. DataHolderFactoryFromConf object must be listed here in order to be used through command line interface.
-   */
-  val dataHolderFactories: List[DataHolderFactoryFromConf] = List(MovieLensDataHolderFactory, NetflixInOneFileDataHolderFactory, NetflixInManyFilesDataHolderFactory)
+    * List of all objects that extend DataHolderFactoryFromConf. DataHolderFactoryFromConf object must be listed here in order to be used through command line interface.
+    */
+  val dataHolderFactories: List[DataHolderFactoryFromConf] = List(MofunContentDataHolderFactory, MovieLensDataHolderFactory, NetflixInOneFileDataHolderFactory, NetflixInManyFilesDataHolderFactory)
 }
 
 //Factories for datasets:
+
+object MofunContentDataHolderFactory extends DataHolderFactoryFromConf {
+  override def getName = "mofunContent"
+
+  override def getDescription = "mofunContent data - mofunsky.com"
+
+  override def getDataHolderInstance(conf: Conf) = new MofunContentDataHolder(conf.dir())
+}
 
 object MovieLensDataHolderFactory extends DataHolderFactoryFromConf {
   override def getName = "movieLens"
