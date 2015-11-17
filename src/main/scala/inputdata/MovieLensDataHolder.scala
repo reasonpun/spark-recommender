@@ -32,7 +32,7 @@ class MovieLensDataHolder(dataDirectoryPath: String) extends DataHolder with Ser
   }
 
   protected def loadIDsToProductnameMapFromADirectory(dataDirectoryPath: String): Map[Int, String] = {
-    val movies = spark.sparkEnvironment.sc.textFile(dataDirectoryPath + "/mysql_data/*/*").map { line =>
+    val movies = spark.sparkEnvironment.sc.textFile(dataDirectoryPath + "/mysql_data/user/*/*").map { line =>
       val fields = line.split(":")
       // format: (movieID, movieName)
       try {
